@@ -12,25 +12,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class BlankFragment extends Fragment {
 
-    private BlankViewModel mViewModel;
+public class Fragment2 extends Fragment {
 
-    public static BlankFragment newInstance() {
-        return new BlankFragment();
+
+
+    public static Fragment2 newInstance() {
+        return new Fragment2();
     }
 
+    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.blank_fragment, container, false);
+        return inflater.inflate(R.layout.fragment1, container, false);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(BlankViewModel.class);
-        // TODO: Use the ViewModel
-    }
+
 
 }
+
