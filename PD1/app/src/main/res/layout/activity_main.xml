@@ -11,24 +11,36 @@
         android:id="@+id/button"
         android:layout_width="224dp"
         android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
         android:text="Capture Image"
         android:textColor="#ffffff"
-        tools:layout_editor_absoluteX="171dp"
-        tools:layout_editor_absoluteY="84dp" />
+        app:layout_constraintBottom_toTopOf="@+id/viewPagerMain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.036" />
 
     <ImageView
         android:id="@+id/imageview"
         android:layout_width="143dp"
         android:layout_height="172dp"
         android:baselineAligned="false"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="39dp" />
+        app:layout_constraintBottom_toTopOf="@+id/viewPagerMain"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.051" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPagerMain"
         android:layout_width="409dp"
-        android:layout_height="435dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="295dp" />
+        android:layout_height="400dp"
+        android:layout_marginEnd="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
