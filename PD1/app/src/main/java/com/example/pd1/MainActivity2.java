@@ -27,8 +27,7 @@ public class MainActivity2 extends AppCompatActivity {
     public boolean onOptionsItemSelected (MenuItem item) {
         switch (item.getItemId()) {
             case R.id.photo_thing:
-                Intent intent = new Intent(MainActivity2.this, MainActivity.class);
-                startActivity(intent);
+                finish();
                 return true;
             case R.id.delete_images:
                 Toast.makeText(this, "Delete photos yes", Toast.LENGTH_SHORT).show();
