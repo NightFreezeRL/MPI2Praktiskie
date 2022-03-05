@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     Button button;
     Uri imageUri;
     ViewPager mViewPager;
-    Bitmap[] images= new Bitmap[5];
+    Bitmap[] images= new Bitmap[1];
     ViewPagerAdapter mViewPagerAdapter;
     int i=0;
 
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
 
                             // show the image to the user
                             imageView.setImageBitmap(image);
-                            if (i<5) {
+                            if (i<1) {
                                 images[i] = image;
                                 i++;
                                 //Initializing the ViewPager Object
@@ -97,8 +97,15 @@ public class MainActivity extends AppCompatActivity {
                                 //Adding the Adapter to the ViewPager
                                 mViewPager.setAdapter(mViewPagerAdapter);
                             }else{
-                                i=0;
-                                images[i] = image;
+                                Bitmap[] newImages=new Bitmap[i+1];
+                                for(int j=0;j<images.length;j++){
+                                    newImages[j]=images[j];
+                                }
+                                newImages[i] = image;
+                                images=new Bitmap[i+1];
+                                for(int j=0;j<newImages.length;j++){
+                                    images[j]=newImages[j];
+                                }
                                 i++;
                                 //Initializing the ViewPager Object
                                 mViewPager=(ViewPager) findViewById(R.id.viewPagerMain);
@@ -125,8 +132,6 @@ public class MainActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageview);
         button = findViewById(R.id.button);
         button.setOnClickListener(aListener);
-
-
 
     }
 
