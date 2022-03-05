@@ -27,6 +27,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -71,9 +72,11 @@ public class MainActivity2 extends AppCompatActivity {
 
     private void startRecording() {
 
-        Date date = new Date();
-        outputFile = date + "_recording.3gp";
-        String file_path=getExternalFilesDir("Audio/"+"My Audio").getAbsolutePath();
+        String pattern = "MM-dd-yyyy";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        String date = simpleDateFormat.format(new Date());
+        outputFile = "Recording-" + date + ".3gp";
+        String file_path=getExternalFilesDir("Audio/").getAbsolutePath();
 
 
         recorder = new MediaRecorder();
@@ -131,7 +134,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         ListView listView = findViewById(R.id.listView);
         ArrayList<String> recordingList = new ArrayList<>();
-        File files = new File(Environment.getExternalStorageDirectory().getPath() + "/Android/data/com.example.pd1/files/");
+        File files = new File(Environment.getExternalStorageDirectory().getPath() + "/Android/data/com.example.pd1/files/Audio/");
         File[] list = files.listFiles();
         assert list != null;
         for (File file : list) {
