@@ -35,6 +35,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -48,7 +49,9 @@ public class MainActivity extends AppCompatActivity {
     Button button;
     Uri imageUri;
     ViewPager mViewPager;
-    int[] images;
+    Bitmap[] images= new Bitmap[5];
+    ViewPagerAdapter mViewPagerAdapter;
+    int i=0;
 
 
     ActivityResultLauncher<Intent> activityResultLauncher;
@@ -82,6 +85,30 @@ public class MainActivity extends AppCompatActivity {
 
                             // show the image to the user
                             imageView.setImageBitmap(image);
+                            if (i<5) {
+                                images[i] = image;
+                                i++;
+                                //Initializing the ViewPager Object
+                                mViewPager=(ViewPager) findViewById(R.id.viewPagerMain);
+
+                                //Initializing the ViewPagerAdapter
+                                mViewPagerAdapter = new ViewPagerAdapter(MainActivity.this, images);
+
+                                //Adding the Adapter to the ViewPager
+                                mViewPager.setAdapter(mViewPagerAdapter);
+                            }else{
+                                i=0;
+                                images[i] = image;
+                                i++;
+                                //Initializing the ViewPager Object
+                                mViewPager=(ViewPager) findViewById(R.id.viewPagerMain);
+
+                                //Initializing the ViewPagerAdapter
+                                mViewPagerAdapter = new ViewPagerAdapter(MainActivity.this, images);
+
+                                //Adding the Adapter to the ViewPager
+                                mViewPager.setAdapter(mViewPagerAdapter);
+                            }
 
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
@@ -98,6 +125,9 @@ public class MainActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageview);
         button = findViewById(R.id.button);
         button.setOnClickListener(aListener);
+
+
+
     }
 
 

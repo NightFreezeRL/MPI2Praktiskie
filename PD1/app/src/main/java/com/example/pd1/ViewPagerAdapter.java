@@ -1,5 +1,6 @@
 package com.example.pd1;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +16,14 @@ class ViewPagerAdapter extends PagerAdapter {
     Context context;
 
     // Array of images
-    int[] images;
+    Bitmap[] images;
 
     // Layout Inflater
     LayoutInflater mLayoutInflater;
 
 
     // Viewpager Constructor
-    public ViewPagerAdapter(Context context, int[] images) {
+    public ViewPagerAdapter(Context context, Bitmap[] images) {
         this.context = context;
         this.images = images;
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -49,7 +50,7 @@ class ViewPagerAdapter extends PagerAdapter {
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imageViewMain);
 
         // setting the image in the imageView
-        imageView.setImageResource(images[position]);
+        imageView.setImageBitmap(images[position]);
 
         // Adding the View
         Objects.requireNonNull(container).addView(itemView);
