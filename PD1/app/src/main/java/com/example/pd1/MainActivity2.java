@@ -7,6 +7,7 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +22,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -28,7 +31,7 @@ import java.util.List;
 
 public class MainActivity2 extends AppCompatActivity {
 
-
+    private FirebaseAnalytics mFirebaseAnalytics;
     private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private String file_path;
@@ -68,13 +71,15 @@ public class MainActivity2 extends AppCompatActivity {
 
         Date date = new Date();
         outputFile = date + "_recording.3gp";
-        String file_path=MainActivity2.this.getExternalFilesDir("/").getAbsolutePath();
+        String file_path=getExternalFilesDir("Audio/"+"My Audio").getAbsolutePath();
+
 
         recorder = new MediaRecorder();
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         recorder.setOutputFile(file_path + "/" + outputFile);
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
 
 
         try {
@@ -118,6 +123,7 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
         listView = (ListView) findViewById(R.id.listView);
 
@@ -147,6 +153,9 @@ public class MainActivity2 extends AppCompatActivity {
     public boolean onOptionsItemSelected (MenuItem item) {
         switch (item.getItemId()) {
             case R.id.photo_thing:
+                Bundle params= new Bundle();
+                params.putString("Image_tab", "Image_button");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
                 finish();
                 return true;
             case R.id.delete_images:

@@ -37,6 +37,8 @@ import androidx.core.content.FileProvider;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -44,7 +46,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-
+    private FirebaseAnalytics mFirebaseAnalytics;
     ImageView imageView;
     Button button;
     Uri imageUri;
@@ -59,11 +61,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == RESULT_OK && result.getData()!=null) {
                         Toast.makeText(MainActivity.this, "Image Saved.", Toast.LENGTH_LONG).show();
+
                     }
 
                     // if we are here, everything processed successfully.
@@ -142,6 +146,9 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent (MediaStore.ACTION_IMAGE_CAPTURE);
                     Uri imagePath= createImage();
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, imagePath);
+                    Bundle params= new Bundle();
+                    params.putString("Image", "Capture_button");
+                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
                     activityResultLauncher.launch(intent);
                 }
             };
@@ -178,6 +185,9 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.audio_thing:
                 Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+                Bundle params= new Bundle();
+                params.putString("Audio_Tab", "Audio_button");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
                 startActivity(intent);
                 return true;
             case R.id.delete_images:
