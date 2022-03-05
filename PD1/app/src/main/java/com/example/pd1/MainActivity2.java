@@ -118,12 +118,15 @@ public class MainActivity2 extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
         LinearLayout ll = new LinearLayout(this);
+
         recordButton = new RecordButton(this);
+
+
         ll.addView(recordButton,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));
+        1));
         setContentView(ll);
     }
 
