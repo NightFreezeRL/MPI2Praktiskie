@@ -76,7 +76,7 @@ public class MainActivity2 extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String date = simpleDateFormat.format(new Date());
         outputFile = "Recording-" + date + ".3gp";
-        String file_path=getExternalFilesDir("Audio/").getAbsolutePath();
+        String file_path=getExternalFilesDir("Audio").getAbsolutePath();
 
 
         recorder = new MediaRecorder();

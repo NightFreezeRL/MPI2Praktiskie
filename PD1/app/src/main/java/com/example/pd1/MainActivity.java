@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.CancellationSignal;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     Uri imageUri;
     ViewPager mViewPager;
     Bitmap[] images= new Bitmap[1];
+    //Bitmap[] images;
     ViewPagerAdapter mViewPagerAdapter;
     int i=0;
 
@@ -65,71 +67,70 @@ public class MainActivity extends AppCompatActivity {
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK && result.getData()!=null) {
-                        Toast.makeText(MainActivity.this, "Image Saved.", Toast.LENGTH_LONG).show();
-
-                    }
-
-                    // if we are here, everything processed successfully.
-
-                        // if we are here, we are hearing back from the image gallery.
-
-                        // the address of the image on the SD Card.
-                        //Uri imageUri = result.getData();
-
-                        // declare a stream to read the image data from the SD Card.
-                        InputStream inputStream;
-
-                        try {
-                            inputStream = getContentResolver().openInputStream(imageUri);
-
-                            // get a bitmap from the stream.
-                            Bitmap image = BitmapFactory.decodeStream(inputStream);
-
-
-                            // show the image to the user
-                            imageView.setImageBitmap(image);
-                            if (i<1) {
-                                images[i] = image;
-                                i++;
-                                //Initializing the ViewPager Object
-                                mViewPager=(ViewPager) findViewById(R.id.viewPagerMain);
-
-                                //Initializing the ViewPagerAdapter
-                                mViewPagerAdapter = new ViewPagerAdapter(MainActivity.this, images);
-
-                                //Adding the Adapter to the ViewPager
-                                mViewPager.setAdapter(mViewPagerAdapter);
-                            }else{
-                                Bitmap[] newImages=new Bitmap[i+1];
-                                for(int j=0;j<images.length;j++){
-                                    newImages[j]=images[j];
-                                }
-                                newImages[i] = image;
-                                images=new Bitmap[i+1];
-                                for(int j=0;j<newImages.length;j++){
-                                    images[j]=newImages[j];
-                                }
-                                i++;
-                                //Initializing the ViewPager Object
-                                mViewPager=(ViewPager) findViewById(R.id.viewPagerMain);
-
-                                //Initializing the ViewPagerAdapter
-                                mViewPagerAdapter = new ViewPagerAdapter(MainActivity.this, images);
-
-                                //Adding the Adapter to the ViewPager
-                                mViewPager.setAdapter(mViewPagerAdapter);
-                            }
-
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                            // show a message to the user indicating that the image is unavailable.
-                            Toast.makeText(MainActivity.this, "Unable to open image", Toast.LENGTH_LONG).show();
-                        }
-
-
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Toast.makeText(MainActivity.this, "Image Saved.", Toast.LENGTH_LONG).show();
 
                 }
+
+                // if we are here, everything processed successfully.
+
+                // if we are here, we are hearing back from the image gallery.
+
+                // the address of the image on the SD Card.
+                //Uri imageUri = result.getData();
+
+                // declare a stream to read the image data from the SD Card.
+                InputStream inputStream;
+
+                try {
+                    inputStream = getContentResolver().openInputStream(imageUri);
+
+                    // get a bitmap from the stream.
+                    Bitmap image = BitmapFactory.decodeStream(inputStream);
+
+
+                    // show the image to the user
+                    imageView.setImageBitmap(image);
+                    if (i < 1) {
+                        images[i] = image;
+                        i++;
+                        //Initializing the ViewPager Object
+                        mViewPager = (ViewPager) findViewById(R.id.viewPagerMain);
+
+                        //Initializing the ViewPagerAdapter
+                        mViewPagerAdapter = new ViewPagerAdapter(MainActivity.this, images);
+
+                        //Adding the Adapter to the ViewPager
+                        mViewPager.setAdapter(mViewPagerAdapter);
+                    } else {
+                        Bitmap[] newImages = new Bitmap[i + 1];
+                        for (int j = 0; j < images.length; j++) {
+                            newImages[j] = images[j];
+                        }
+                        newImages[i] = image;
+                        images = new Bitmap[i + 1];
+                        for (int j = 0; j < newImages.length; j++) {
+                            images[j] = newImages[j];
+                        }
+                        i++;
+                        //Initializing the ViewPager Object
+                        mViewPager = (ViewPager) findViewById(R.id.viewPagerMain);
+
+                        //Initializing the ViewPagerAdapter
+                        mViewPagerAdapter = new ViewPagerAdapter(MainActivity.this, images);
+
+                        //Adding the Adapter to the ViewPager
+                        mViewPager.setAdapter(mViewPagerAdapter);
+                    }
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    // show a message to the user indicating that the image is unavailable.
+                    Toast.makeText(MainActivity.this, "Unable to open image", Toast.LENGTH_LONG).show();
+                }
+
+
+            }
 
         });
 
@@ -137,6 +138,38 @@ public class MainActivity extends AppCompatActivity {
         button = findViewById(R.id.button);
         button.setOnClickListener(aListener);
 
+
+        String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString() + "/My Images";
+        Log.d("Files", "Path: " + path);
+        File direct= new File(path);
+        File[] list = direct.listFiles();
+        Log.d("Files", "Path: " + direct.listFiles());
+
+        if (list != null) {
+            for (File file : list) {
+                Bitmap idk = BitmapFactory.decodeFile(file.toString());
+                images[i] = idk;
+                Bitmap[] newImages = new Bitmap[i + 2];
+                for (int j = 0; j < images.length; j++) {
+                    newImages[j] = images[j];
+                }
+                newImages[i] = idk;
+                images = new Bitmap[i + 2];
+                for (int j = 0; j < newImages.length; j++) {
+                    images[j] = newImages[j];
+                }
+                i++;
+            }
+            //Initializing the ViewPager Object
+            mViewPager = (ViewPager) findViewById(R.id.viewPagerMain);
+
+            //Initializing the ViewPagerAdapter
+            mViewPagerAdapter = new ViewPagerAdapter(MainActivity.this, images);
+
+            //Adding the Adapter to the ViewPager
+            mViewPager.setAdapter(mViewPagerAdapter);
+            Toast.makeText(this,"hi",Toast.LENGTH_SHORT).show();
+        }
     }
 
 
