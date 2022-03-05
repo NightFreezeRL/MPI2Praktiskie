@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -125,9 +127,24 @@ public class MainActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
-        listView = (ListView) findViewById(R.id.listView);
 
 
+        ListView listView = findViewById(R.id.listView);
+        ArrayList<String> recordingList = new ArrayList<>();
+        File files = new File(Environment.getExternalStorageDirectory().getPath() + "/Android/data/com.example.pd1/files/");
+        File[] list = files.listFiles();
+        assert list != null;
+        for (File file : list) {
+            recordingList.add(file.getName());
+            Bundle params= new Bundle();
+            params.putString("Audio_recs", file.getName());
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
+        }
+
+        Log.d("Main:" ," Audio names : " + recordingList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity2.this, android.R.layout.simple_list_item_1, recordingList);
+        listView.setAdapter(adapter);
+        Log.d("Main:" ," List check : " + listView);
 
 
         LinearLayout ll = new LinearLayout(this);
