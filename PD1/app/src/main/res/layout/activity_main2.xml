@@ -7,23 +7,13 @@
     tools:context=".MainActivity2">
 
     <ListView
-        android:id="@+id/listview"
-        android:layout_width="409dp"
+        android:id="@+id/listView"
+        android:layout_width="410dp"
         android:layout_height="400dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.951" />
-
-    <Button
-        android:id="@+id/recordButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/record"
-        app:layout_constraintBottom_toTopOf="@+id/listview"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintVertical_bias="0.996" />
 </androidx.constraintlayout.widget.ConstraintLayout>

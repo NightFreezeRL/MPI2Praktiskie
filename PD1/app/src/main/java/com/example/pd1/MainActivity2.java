@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import androidx.core.app.ActivityCompat;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity2 extends AppCompatActivity {
 
@@ -31,6 +33,7 @@ public class MainActivity2 extends AppCompatActivity {
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     private String file_path;
     private String outputFile;
+    private ListView listView;
 
     private RecordButton recordButton = null;
     private MediaRecorder recorder = null;
@@ -116,12 +119,13 @@ public class MainActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+        listView = (ListView) findViewById(R.id.listView);
+
+
+
 
         LinearLayout ll = new LinearLayout(this);
-
         recordButton = new RecordButton(this);
-
-
         ll.addView(recordButton,
                 new LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT,
