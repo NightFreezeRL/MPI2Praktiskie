@@ -144,22 +144,37 @@ public class MainActivity extends AppCompatActivity {
         File direct= new File(path);
         File[] list = direct.listFiles();
         Log.d("Files", "Path: " + direct.listFiles());
-
+        int k=list.length;
+        Log.d("Files", "Files: " + k);
         if (list != null) {
             for (File file : list) {
                 Bitmap idk = BitmapFactory.decodeFile(file.toString());
                 images[i] = idk;
-                Bitmap[] newImages = new Bitmap[i + 2];
-                for (int j = 0; j < images.length; j++) {
-                    newImages[j] = images[j];
+                if(i<k-1) {
+                    Bitmap[] newImages = new Bitmap[i + 1];
+                    for (int j = 0; j < images.length; j++) {
+                        newImages[j] = images[j];
+                    }
+
+                    images = new Bitmap[i + 2];// 0=2
+                    for (int j = 0; j < newImages.length; j++) {
+                        images[j] = newImages[j];
+                    }
+                    i++;
+                }else{
+                    Bitmap[] newImages = new Bitmap[i+1];
+                    for (int j = 0; j < images.length; j++) {
+                        newImages[j] = images[j];
+                    }
+                    images = new Bitmap[i+1];
+                    for (int j = 0; j < newImages.length; j++) {
+                        images[j] = newImages[j];
+                    }
+                    i++;
                 }
-                newImages[i] = idk;
-                images = new Bitmap[i + 2];
-                for (int j = 0; j < newImages.length; j++) {
-                    images[j] = newImages[j];
-                }
-                i++;
             }
+            Log.d("Files", "Images length: " + images.length);
+
             //Initializing the ViewPager Object
             mViewPager = (ViewPager) findViewById(R.id.viewPagerMain);
 
