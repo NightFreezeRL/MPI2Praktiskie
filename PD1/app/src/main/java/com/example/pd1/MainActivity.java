@@ -71,14 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Image Saved.", Toast.LENGTH_LONG).show();
 
                 }
-
-                // if we are here, everything processed successfully.
-
-                // if we are here, we are hearing back from the image gallery.
-
-                // the address of the image on the SD Card.
-                //Uri imageUri = result.getData();
-
+                
                 // declare a stream to read the image data from the SD Card.
                 InputStream inputStream;
 
