@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -40,16 +41,12 @@ import java.util.List;
 public class MainActivity2 extends AppCompatActivity {
 
     private FirebaseAnalytics mFirebaseAnalytics;
-    private static final String LOG_TAG = "AudioRecordTest";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
-    private String file_path;
     private String outputFile;
-    private ListView listView;
-    private RecordButton recordButton = null;
     private MediaRecorder recorder = null;
     private MediaPlayer player = null;
 
-
+    Button recordButton;
 
 
 
@@ -108,27 +105,19 @@ public class MainActivity2 extends AppCompatActivity {
         recorder = null;
     }
 
-    class RecordButton extends androidx.appcompat.widget.AppCompatButton {
         boolean mStartRecording = true;
 
-        OnClickListener clicker = new OnClickListener() {
+        View.OnClickListener clicker = new View.OnClickListener() {
             public void onClick(View v) {
                 onRecord(mStartRecording);
                 if (mStartRecording) {
-                    setText("Stop recording");
+                    recordButton.setText("Stop recording");
                 } else {
-                    setText("Start recording");
+                    recordButton.setText("Start recording");
                 }
                 mStartRecording = !mStartRecording;
             }
         };
-
-        public RecordButton(Context ctx) {
-            super(ctx);
-            setText("Start recording");
-            setOnClickListener(clicker);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +125,10 @@ public class MainActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+        recordButton = findViewById(R.id.recordButton);
+        recordButton.setOnClickListener(clicker);
+
+
 
 
         ListView listView = findViewById(R.id.listView);
@@ -154,16 +147,6 @@ public class MainActivity2 extends AppCompatActivity {
         Log.d("Main:" ," Audio names : " + recordingList);
         listView.setAdapter(adapter);
 
-
-
-        LinearLayout ll = new LinearLayout(this);
-        recordButton = new RecordButton(this);
-        ll.addView(recordButton,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-        1));
-        setContentView(ll);
     }
 
 
