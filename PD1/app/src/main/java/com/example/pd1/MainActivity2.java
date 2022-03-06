@@ -9,24 +9,29 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.helper.widget.Carousel;
 import androidx.core.app.ActivityCompat;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,12 +45,14 @@ public class MainActivity2 extends AppCompatActivity {
     private String file_path;
     private String outputFile;
     private ListView listView;
-
     private RecordButton recordButton = null;
     private MediaRecorder recorder = null;
     private MediaPlayer player = null;
 
-    // Requesting permission to RECORD_AUDIO
+
+
+
+
     private boolean permissionToRecordAccepted = false;
     private String [] permissions = {Manifest.permission.RECORD_AUDIO};
 
@@ -72,11 +79,11 @@ public class MainActivity2 extends AppCompatActivity {
 
     private void startRecording() {
 
-        String pattern = "MM-dd-yyyy";
+        String pattern = "MM-dd-yyyy-hh-mm-ss";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String date = simpleDateFormat.format(new Date());
         outputFile = "Recording-" + date + ".3gp";
-        String file_path=getExternalFilesDir("Audio").getAbsolutePath();
+        String file_path=getExternalFilesDir("Audio/").getAbsolutePath();
 
 
         recorder = new MediaRecorder();
@@ -84,7 +91,6 @@ public class MainActivity2 extends AppCompatActivity {
         recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         recorder.setOutputFile(file_path + "/" + outputFile);
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
 
 
         try {
@@ -133,21 +139,21 @@ public class MainActivity2 extends AppCompatActivity {
 
 
         ListView listView = findViewById(R.id.listView);
-        ArrayList<String> recordingList = new ArrayList<>();
-        File files = new File(Environment.getExternalStorageDirectory().getPath() + "/Android/data/com.example.pd1/files/Audio/");
-        File[] list = files.listFiles();
-        assert list != null;
-        for (File file : list) {
-            recordingList.add(file.getName());
-            Bundle params= new Bundle();
-            params.putString("Audio_recs", file.getName());
-            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
+        ArrayList recordingList = new ArrayList();
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, recordingList);
+        File audiofile = new File(Environment.getExternalStorageDirectory().getPath() + "/Android/data/com.example.pd1/files/Audio/");
+        File[] listOfAudios = audiofile.listFiles();
+        Bundle params= new Bundle();
+        for (File file : listOfAudios) {
+           recordingList.add(file.getName());
+           params.putString("Audio_recs", file.getName());
+           mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
+           adapter.notifyDataSetChanged();
         }
-
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, recordingList);
         Log.d("Main:" ," Audio names : " + recordingList);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity2.this, android.R.layout.simple_list_item_1, recordingList);
         listView.setAdapter(adapter);
-        Log.d("Main:" ," List check : " + listView);
+
 
 
         LinearLayout ll = new LinearLayout(this);
@@ -159,7 +165,6 @@ public class MainActivity2 extends AppCompatActivity {
         1));
         setContentView(ll);
     }
-
 
 
     @Override
