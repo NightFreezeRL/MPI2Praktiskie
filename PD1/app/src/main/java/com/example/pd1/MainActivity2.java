@@ -48,6 +48,7 @@ public class MainActivity2 extends AppCompatActivity {
     private RecordButton recordButton = null;
     private MediaRecorder recorder = null;
     private MediaPlayer player = null;
+    ArrayList<String> recordingList;
 
 
 
@@ -138,8 +139,8 @@ public class MainActivity2 extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
 
-        ListView listView = findViewById(R.id.listView);
-        ArrayList recordingList = new ArrayList();
+        listView = findViewById(R.id.listView);
+        recordingList = new ArrayList<>();
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, recordingList);
         File audiofile = new File(Environment.getExternalStorageDirectory().getPath() + "/Android/data/com.example.pd1/files/Audio/");
         File[] listOfAudios = audiofile.listFiles();
