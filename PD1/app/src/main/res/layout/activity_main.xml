@@ -21,7 +21,6 @@
 
     <ImageView
         android:id="@+id/imageview"
-        android:rotation="90"
         android:layout_width="143dp"
         android:layout_height="172dp"
         android:baselineAligned="false"
