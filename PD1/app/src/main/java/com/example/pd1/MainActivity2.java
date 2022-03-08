@@ -95,7 +95,9 @@ public class MainActivity2 extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, recordingList);
         Log.d("Main:" ," Audio names : " + recordingList);
         listView.setAdapter(adapter);
-
+        Bundle params=new Bundle();
+        params.putString("Audio_recs", "Sāka recording");
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params);
         try {
             recorder.prepare();
         } catch (IOException e) {
