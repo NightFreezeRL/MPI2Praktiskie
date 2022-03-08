@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="lv.renarspikalovs.myapplication.MainActivity">
+    <item
+        android:id="@+id/api_thing"
+        android:orderInCategory="100"
+        android:title="Fish List"
+        app:showAsAction="never" />
+</menu>
