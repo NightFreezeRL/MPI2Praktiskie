@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.map_thing:
                 Intent intent = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(intent);
+                finish();
                 return true;
             default:
         }

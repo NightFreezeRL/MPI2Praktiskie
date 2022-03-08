@@ -57,6 +57,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.api_thing:
                 Intent intent = new Intent(MapsActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
                 return true;
             default:
         }
